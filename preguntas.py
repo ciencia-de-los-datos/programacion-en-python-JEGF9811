@@ -420,5 +420,6 @@ def pregunta_12():
                     suma+=int(valor)
                 if str(letra) == letra_mayus:
                     suma_acum+=suma
+                    
             dicc[letra]=suma_acum
     return dicc
