@@ -14,93 +14,127 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 
 def pregunta_01():
-    """
-    Retorne la suma de la segunda columna.
+    import csv
+    with open('data.csv',newline='') as cvsfile:
+        spamreader =csv.reader(cvsfile,delimiter = ' ')
+        info_csv = '\n'.join('\t'.join(row) for row in spamreader)
+        lineas = info_csv.split('\n')
+        suma = 0
+        for linea in lineas:
+            num = linea.split('\t')[1]
+            suma += int(num)
 
-    Rta/
-    214
+    return suma
+    
 
-    """
-    return
+    
+    
 
 
 def pregunta_02():
-    """
-    Retorne la cantidad de registros por cada letra de la primera columna como la lista
-    de tuplas (letra, cantidad), ordendas alfabéticamente.
-
-    Rta/
-    [
-        ("A", 8),
-        ("B", 7),
-        ("C", 5),
-        ("D", 6),
-        ("E", 14),
-    ]
-
-    """
-    return
+    import csv
+    with open('data.csv',newline='') as cvsfile:
+        spamreader =csv.reader(cvsfile,delimiter = ' ')
+        info_csv = '\n'.join('\t'.join(row) for row in spamreader)
+        lineas = info_csv.split('\n')
+        dicc = []
+        count_A:int = 0
+        count_B:int = 0
+        count_C:int = 0
+        count_D:int = 0
+        count_E:int = 0
+        for linea in lineas:
+            letra = linea.split('\t')[0]
+            if letra=='A':
+                count_A +=1
+            elif letra=='B':
+                count_B +=1
+            elif letra=='C':
+                count_C +=1
+            elif letra=='D':
+                count_D +=1
+            else:
+                count_E +=1
+        dicc = [('A',count_A),('B',count_B),('C',count_C),('D',count_D),('E',count_E)]
+    return dicc
 
 
 def pregunta_03():
-    """
-    Retorne la suma de la columna 2 por cada letra de la primera columna como una lista
-    de tuplas (letra, suma) ordendas alfabeticamente.
-
-    Rta/
-    [
-        ("A", 53),
-        ("B", 36),
-        ("C", 27),
-        ("D", 31),
-        ("E", 67),
-    ]
-
-    """
-    return
+    import csv
+    with open('data.csv',newline='') as cvsfile:
+        spamreader =csv.reader(cvsfile,delimiter = ' ')
+        info_csv = '\n'.join('\t'.join(row) for row in spamreader)
+        lineas = info_csv.split('\n')
+        dicc = []
+        count_A:int = 0
+        count_B:int = 0
+        count_C:int = 0
+        count_D:int = 0
+        count_E:int = 0
+        for linea in lineas:
+            letra = linea.split('\t')[0]
+            num = linea.split('\t')[1]
+            if letra=='A':
+                count_A +=int(num)
+            elif letra=='B':
+                count_B +=int(num)
+            elif letra=='C':
+                count_C +=int(num)
+            elif letra=='D':
+                count_D +=int(num)
+            else:
+                count_E +=int(num)
+    dicc = [('A',count_A),('B',count_B),('C',count_C),('D',count_D),('E',count_E)]
+    return dicc
 
 
 def pregunta_04():
-    """
-    La columna 3 contiene una fecha en formato `YYYY-MM-DD`. Retorne la cantidad de
-    registros por cada mes, tal como se muestra a continuación.
-
-    Rta/
-    [
-        ("01", 3),
-        ("02", 4),
-        ("03", 2),
-        ("04", 4),
-        ("05", 3),
-        ("06", 3),
-        ("07", 5),
-        ("08", 6),
-        ("09", 3),
-        ("10", 2),
-        ("11", 2),
-        ("12", 3),
-    ]
-
-    """
-    return
+    import csv
+    with open('data.csv',newline='') as cvsfile:
+        spamreader =csv.reader(cvsfile,delimiter = ' ')
+        info_csv = '\n'.join('\t'.join(row) for row in spamreader)
+        lineas = info_csv.split('\n')
+    
+        dicc={}
+        lista=[]
+        for i in range(1,13):
+            clave = f'count_{i:02}'
+            dicc[clave]=0
+        for cuenta in dicc: #cuenta es count_01, count_02...
+            for linea in lineas:
+                mes = linea.split('\t')[2][5:7]
+                if str(cuenta)[6::]==str(mes):
+                    dicc[f'{cuenta}']+=1
+            tupla=(f'{str(cuenta)[6::]}',dicc[cuenta])
+            lista.append(tupla)
+    return lista
 
 
 def pregunta_05():
-    """
-    Retorne una lista de tuplas con el valor maximo y minimo de la columna 2 por cada
-    letra de la columa 1.
-
-    Rta/
-    [
-        ("A", 9, 2),
-        ("B", 9, 1),
-        ("C", 9, 0),
-        ("D", 8, 3),
-        ("E", 9, 1),
-    ]
-
-    """
-    return
+    import csv
+    with open('data.csv',newline='') as cvsfile:
+        spamreader =csv.reader(cvsfile,delimiter = ' ')
+        info_csv = '\n'.join('\t'.join(row) for row in spamreader)
+        lineas = info_csv.split('\n')
+    
+        letras=['A','B','C','D','E']
+        dicc_tuplas={}
+        dicc={}
+        lista=[]
+        for i in letras:
+            clave = i
+            dicc[clave]=[]
+        for letra in dicc: #cuenta es count_01, count_02...
+            for linea in lineas:
+                num = int(linea.split('\t')[1])
+                if str(letra)==str(linea.split('\t')[0]):
+                    dicc[f'{letra}'].append(num)
+        
+            clave = letra
+            dicc_tuplas[clave]=(str(letra),max(dicc[letra]),min(dicc[letra]))
+            lista.append(dicc_tuplas[letra])
+            
+    return lista
 
 
 def pregunta_06():
@@ -125,7 +159,40 @@ def pregunta_06():
     ]
 
     """
-    return
+    import csv
+    with open('data.csv',newline='') as cvsfile:
+        spamreader =csv.reader(cvsfile,delimiter = ' ')
+        info_csv = '\n'.join('\t'.join(row) for row in spamreader)
+        lineas = info_csv.split('\n')
+        
+        letras=['a','b','c','d','e','f','g','h','i','j']
+        dicc_tuplas={}
+        dicc={}
+        lista=[]
+        dicc_local={}
+        for i in letras:
+            clave = i*3
+            dicc[clave]=[]
+        #print(dicc)
+        for linea in lineas:
+            dicc_local={}
+            texto=(linea.split('\t')[4]).split(',')   
+            i=0         
+            for par in texto:
+                i+=1
+                claves=list(dicc_local.keys())
+                clave,valor=par.split(':')
+                dicc_local[clave]=int(valor)
+                for key in dicc_local.keys():
+                    if str(clave)==str(key):
+                        dicc[f'{clave}'].append(int(valor))
+        for key in dicc.keys():
+            for j in range(len(dicc[key])):
+                int(dicc[key][j])
+
+            dicc_tuplas[key]=(str(key),min(dicc[key]),max(dicc[key]))
+            lista.append(dicc_tuplas[key])
+    return lista
 
 
 def pregunta_07():
@@ -149,7 +216,21 @@ def pregunta_07():
     ]
 
     """
-    return
+    import csv
+    with open('data.csv',newline='') as cvsfile:
+        spamreader =csv.reader(cvsfile,delimiter = ' ')
+        info_csv = '\n'.join('\t'.join(row) for row in spamreader)
+        lineas = info_csv.split('\n')
+        lista_tuplas=[]
+        for i in range(0,10,1):
+            tupla=(i,[])
+            for linea in lineas:
+                letra=str(linea.split('\t')[0])
+                num=int(linea.split('\t')[1])
+                if num==i:
+                    tupla[1].append(letra)
+            lista_tuplas.append(tupla)
+    return lista_tuplas
 
 
 def pregunta_08():
@@ -174,7 +255,25 @@ def pregunta_08():
     ]
 
     """
-    return
+    import csv
+    with open('data.csv',newline='') as cvsfile:
+        spamreader =csv.reader(cvsfile,delimiter = ' ')
+        info_csv = '\n'.join('\t'.join(row) for row in spamreader)
+        lineas = info_csv.split('\n')
+        lista_tuplas=[]
+        for i in range(0,10,1):
+            lista_letras=[]
+            for linea in lineas:
+                letra=str(linea.split('\t')[0])
+                num=int(linea.split('\t')[1])
+                if num==i:
+                    lista_letras.append(letra)
+            c_unicos=set(lista_letras)  
+            lista_letras=list(c_unicos)
+            lista_letras.sort()  
+            tupla=(i,lista_letras)   
+            lista_tuplas.append(tupla)
+    return lista_tuplas
 
 
 def pregunta_09():
@@ -197,7 +296,25 @@ def pregunta_09():
     }
 
     """
-    return
+    import csv
+    with open('data.csv',newline='') as cvsfile:
+        spamreader =csv.reader(cvsfile,delimiter = ' ')
+        info_csv = '\n'.join('\t'.join(row) for row in spamreader)
+        lineas = info_csv.split('\n')
+        letras=['a','b','c','d','e','f','g','h','i','j']
+        dicc={}
+        for letra in letras:
+            cuenta=0
+            for linea in lineas:
+                pares=linea.split('\t')[4].split(',')
+                for par in pares:
+                    
+                    clave,valor= par.split(':')
+                    if str(clave)==str(letra*3):
+                        cuenta+=1
+                n_valor=int(cuenta)
+                dicc[letra*3]=n_valor
+    return dicc
 
 
 def pregunta_10():
@@ -218,7 +335,20 @@ def pregunta_10():
 
 
     """
-    return
+    import csv
+    with open('data.csv',newline='') as cvsfile:
+        spamreader =csv.reader(cvsfile,delimiter = ' ')
+        info_csv = '\n'.join('\t'.join(row) for row in spamreader)
+        lineas = info_csv.split('\n')
+        lista=[]
+
+        for linea in lineas:
+            letra=str(linea.split('\t')[0])
+            col4=len(linea.split('\t')[3].split(','))
+            col5=len(linea.split('\t')[4].split(','))
+            tupla=(letra,col4,col5)      
+            lista.append(tupla)
+    return lista
 
 
 def pregunta_11():
@@ -239,7 +369,22 @@ def pregunta_11():
 
 
     """
-    return
+    import csv
+    with open('data.csv',newline='') as cvsfile:
+        spamreader =csv.reader(cvsfile,delimiter = ' ')
+        info_csv = '\n'.join('\t'.join(row) for row in spamreader)
+        lineas = info_csv.split('\n')
+        letras=['a','b','c','d','e','f','g']
+        dicc={}
+        for letra in letras:
+            suma=0
+            for linea in lineas:
+                num=int(linea.split('\t')[1])
+                lista_letras=list(str(linea.split('\t')[3].split(',')))
+                if str(letra) in lista_letras:
+                    suma+=num
+            dicc[letra]=suma
+    return dicc
 
 
 def pregunta_12():
@@ -257,4 +402,23 @@ def pregunta_12():
     }
 
     """
-    return
+    import csv
+    with open('data.csv',newline='') as cvsfile:
+        spamreader =csv.reader(cvsfile,delimiter = ' ')
+        info_csv = '\n'.join('\t'.join(row) for row in spamreader)
+        lineas = info_csv.split('\n')
+        letras=['A','B','C','D','E']
+        dicc={}
+        for letra in letras:
+            suma_acum=0
+            for linea in lineas:
+                suma=0
+                letra_mayus=str(linea.split('\t')[0])
+                pares=linea.split('\t')[4].split(',')
+                for par in pares:
+                    clave,valor=par.split(':')
+                    suma+=int(valor)
+                if str(letra) == letra_mayus:
+                    suma_acum+=suma
+            dicc[letra]=suma_acum
+    return dicc
